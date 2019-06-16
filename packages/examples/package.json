@@ -1,0 +1,27 @@
+{
+  "name": "sdkore-examples",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "clean": "rimraf dist/*",
+    "prebuild": "yarn clean",
+    "prewatch": "yarn prebuild",
+    "test": "jest",
+    "test:coverage": "jest --coverage && open ./coverage/lcov-report/index.html",
+    "lint": "tslint --project tsconfig.base.json -c tslint.json '{src,test,examples}/**/*.ts*'",
+    "_webpack": "TS_NODE_PROJECT=\"config/webpack/tsconfig.json\" webpack --config config/webpack/webpack.config.ts",
+    "_webpack-dev-server": "TS_NODE_PROJECT=\"config/webpack/tsconfig.json\" webpack-dev-server --progress --config config/webpack/webpack.config.ts",
+    "build": "yarn _webpack --env production -p --config-name build",
+    "build:dev": "yarn _webpack --env development --config-name build",
+    "watch": "yarn _webpack --env development --watch --config-name build",
+    "build:examples": "yarn _webpack --env development --config-name examples",
+    "watch:examples": "yarn _webpack --env development --watch --config-name examples",
+    "start": "yarn _webpack-dev-server -p --inline --config-name examples",
+    "doc": "rimraf doc/* && typedoc src/",
+    "pub:dev": "yarn build:dev && wsc pub:dev --no-build",
+    "pub": "wsc pub"
+  },
+  "dependencies": {
+    "sdkore": "^2.0.0"
+  }
+}

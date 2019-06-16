@@ -1,0 +1,47 @@
+{
+  "name": "sdkore",
+  "version": "2.0.0",
+  "description": "Abstract tooling and easy to use Client for making SDK with any REST API.",
+  "main": "dist/index.js",
+  "types": "index.d.ts",
+  "repository": "git@github.com:bios21/sdkore.git",
+  "homepage": "https://github.com/bios21/sdkore",
+  "bugs": {
+    "url": "https://github.com/bios21/sdkore/issues"
+  },
+  "author": "Lilian Saget-Lethias <lilian.sagetlethias@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rimraf dist/*",
+    "prebuild": "yarn clean",
+    "prewatch": "yarn prebuild",
+    "test": "jest",
+    "test:coverage": "jest --coverage && open ./coverage/lcov-report/index.html",
+    "lint": "tslint --project tsconfig.base.json -c tslint.json '{src,test,examples}/**/*.ts*'",
+    "_webpack": "TS_NODE_PROJECT=\"config/webpack/tsconfig.json\" webpack --config config/webpack/webpack.config.ts",
+    "_webpack-dev-server": "TS_NODE_PROJECT=\"config/webpack/tsconfig.json\" webpack-dev-server --progress --config config/webpack/webpack.config.ts",
+    "build": "yarn _webpack --env production -p --config-name build",
+    "build:dev": "yarn _webpack --env development --config-name build",
+    "watch": "yarn _webpack --env development --watch --config-name build",
+    "build:examples": "yarn _webpack --env development --config-name examples",
+    "watch:examples": "yarn _webpack --env development --watch --config-name examples",
+    "start": "yarn _webpack-dev-server -p --inline --config-name examples",
+    "doc": "rimraf doc/* && typedoc src/",
+    "pub:dev": "yarn build:dev && wsc pub:dev --no-build",
+    "pub": "wsc pub"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "dependencies": {
+    "axios": "^0.18.1",
+    "idb-keyval": "^3.1.0",
+    "query-string": "^6.0.0"
+  },
+  "files": [
+    "UPGRADE*",
+    "CHANGELOG*",
+    "dist/",
+    "index.d.ts"
+  ]
+}

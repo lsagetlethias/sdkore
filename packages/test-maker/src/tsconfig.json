@@ -1,0 +1,11 @@
+{
+  "extends": "../../../tsconfig.node.json",
+  "compilerOptions": {
+    "outDir": "../dist",
+    "allowJs": false,
+    "declaration": true,
+    "declarationDir": "../dist",
+    "noEmit": false,
+    "pretty": true
+  }
+}

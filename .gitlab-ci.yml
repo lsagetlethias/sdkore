@@ -1,0 +1,93 @@
+stages:
+  - build
+  - quality
+  - deploy
+
+.tpl: &docker-node
+  image: node:10-alpine
+  tags: [docker]
+
+
+build:
+  stage: build
+  <<: *docker-node
+  script:
+    - echo "//nexus.wynd.eu/repository/npm/:_authToken=${NPM_TOKEN}" >> .npmrc
+    - rm -rf node_modules/
+    - yarn install --force
+    - yarn build
+  artifacts:
+    when: always
+    untracked: true
+    expire_in: 5 minutes
+
+publish-dev:
+  stage: build
+  <<: *docker-node
+  script:
+    - echo "//nexus.wynd.eu/repository/npm/:_authToken=${NPM_TOKEN}" >> .npmrc
+    - echo "//nexus.wynd.eu/repository/npm-hosted/:_authToken=${NPM_TOKEN}" >> .npmrc
+    - rm -rf node_modules/
+    - yarn install --force
+    - yarn pub:dev
+  when: manual
+  only:
+    - /^develop$/
+    - /^ci\/.*$/
+    - /^archi\/.*$/
+
+lint:
+  stage: quality
+  <<: *docker-node
+  dependencies:
+    - build
+  script:
+    - yarn lint
+
+test:
+  stage: quality
+  <<: *docker-node
+  dependencies:
+    - build
+  script:
+    - yarn test --ci --coverage
+  coverage: '/Statements.*?(\d+(?:\.\d+)?)%/'
+  artifacts:
+    when: always
+    paths:
+      - dist/stats.html
+      - coverage/
+    expire_in: 5 minutes
+
+doc:
+  stage: quality
+  <<: *docker-node
+  dependencies:
+    - build
+  only:
+    - develop
+  script:
+    - yarn doc
+  artifacts:
+    when: always
+    paths:
+      - doc/
+    expire_in: 5 minutes
+
+pages:
+  stage: deploy
+  image: alpine:latest
+  tags: [docker]
+  script:
+    - mv coverage/lcov-report public/
+    - mv doc public/doc/
+    - mv dist/stats.html public/
+  dependencies:
+    - test
+    - doc
+  only:
+    - develop
+  allow_failure: true
+  artifacts:
+    paths:
+      - public
