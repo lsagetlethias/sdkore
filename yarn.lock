@@ -131,6 +131,11 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
+"@bios21/tstrait@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@bios21/tstrait/-/tstrait-1.0.0.tgz#9dffb4dd43a75e3c489e3e89e78db09f567d6bd1"
+  integrity sha512-0b9Q2QqmoZiKaLk2Rwacdu8+DURuRMWh+hnMedRGBd2Ehd+dhBev3iDOH3STe6AlHGeyVlFIueWvUagGdlwE0w==
+
 "@cnakazawa/watch@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@cnakazawa/watch/-/watch-1.0.3.tgz#099139eaec7ebf07a27c1786a3ff64f39464d2ef"

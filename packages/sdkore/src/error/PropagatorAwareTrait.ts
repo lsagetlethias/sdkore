@@ -1,5 +1,5 @@
+import { Trait } from '@bios21/tstrait';
 import { GlobalStore } from '../store/GlobalStore';
-import { Trait } from '../Trait';
 import { IPropagatorAware } from './IPropagatorAware';
 
 /* istanbul ignore next: WIP */

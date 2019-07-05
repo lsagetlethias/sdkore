@@ -1,4 +1,4 @@
-import { Use } from '../@';
+import { Use } from '@bios21/tstrait';
 import { GlobalStore } from '../store/GlobalStore';
 import { PropagatorAwareTrait } from './PropagatorAwareTrait';
 

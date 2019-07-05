@@ -23,8 +23,6 @@
     "build": "yarn _webpack --env production -p --config-name build",
     "build:dev": "yarn _webpack --env development --config-name build",
     "watch": "yarn _webpack --env development --watch --config-name build",
-    "build:examples": "yarn _webpack --env development --config-name examples",
-    "watch:examples": "yarn _webpack --env development --watch --config-name examples",
     "start": "yarn _webpack-dev-server -p --inline --config-name examples",
     "doc": "rimraf doc/* && typedoc src/",
     "pub:dev": "yarn build:dev && wsc pub:dev --no-build",
@@ -34,6 +32,7 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
+    "@bios21/tstrait": "^1.0.0",
     "axios": "^0.18.1",
     "idb-keyval": "^3.1.0",
     "query-string": "^6.0.0"

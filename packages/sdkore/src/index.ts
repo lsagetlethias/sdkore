@@ -3,7 +3,6 @@ import { GlobalStore } from './store/GlobalStore';
 export * from './utils/client';
 export { Logger } from './utils/Logger';
 export * from './utils/Types';
-export { Trait } from './Trait';
 export * from './cache';
 export * from './DAO';
 export * from './DTO';

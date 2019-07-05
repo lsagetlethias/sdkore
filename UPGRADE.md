@@ -1,3 +1,6 @@
+# 2.0.0
+- Use `@bios21/tstrait` library instead of builtin traits
+
 # 1.22
 ## Client (and cache policies)
 - `Client` does not accept the following options anymore: `cache`, `cacheRequestExpiration`. You should now set instead a `cachePolicy` which can contain an `ICache` and, if the policy handle it, a request expiration.
