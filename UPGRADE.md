@@ -1,5 +1,6 @@
 # 2.0.0
 - Use `@bios21/tstrait` library instead of builtin traits
+- Spliting core and implementation. Every specific Accessors are removed
 
 # 1.22
 ## Client (and cache policies)

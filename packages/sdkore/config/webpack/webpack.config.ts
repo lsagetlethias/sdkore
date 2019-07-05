@@ -27,12 +27,10 @@ export default function webpackConfig(environment: string): webpack.Configuratio
         mode: 'development',
         resolve: {
             extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
-            // modules: [options.alias['@npm']],
         },
         resolveLoader: {
             alias: options.alias,
             moduleExtensions: ['-loader'],
-            // modules: [options.alias['@npm']],
         },
         plugins: [
             new webpack.DefinePlugin({
