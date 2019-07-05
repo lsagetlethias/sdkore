@@ -1,0 +1,15 @@
+node_modules/
+dist/*
+!dist/.gitkeep
+packages/*/dist/*
+!packages/*/dist/.gitkeep
+packages/examples/*.js*
+!packages/examples/tsconfig.json
+coverage/
+test/__fixtures__/_compiled.json
+packages/*/doc/*
+!/.vscode/
+/.vscode/*
+!/.vscode/launch.json
+!/.vscode/settings.json
+!/.vscode/tasks.json
