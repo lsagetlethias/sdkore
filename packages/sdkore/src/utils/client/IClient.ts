@@ -13,13 +13,6 @@ export interface ClientParameters {
 
 export type HeadersList = RequestHeaderObject & { [K in string]: string };
 
-declare module 'axios' {
-    interface AxiosRequestConfig {
-        forceUpdate?: boolean;
-        cache?: boolean;
-    }
-}
-
 export type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 export type RequestHeaderObject = { [key in RequestHeaderName | string]: string };
 
