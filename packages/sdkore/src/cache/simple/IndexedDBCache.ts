@@ -142,7 +142,7 @@ export class IndexedDBCache<T = any> extends AbstractCache<T> {
         const now = Date.now();
         await Promise.all(
             (await idb.keys(this.store)).map(async key => {
-                const expiry = (await idb.get(key, this.store))[1];
+                const expiry = (await idb.get<[any, number]>(key, this.store))[1];
                 if (expiry && expiry <= now) {
                     return idb.del(key, this.store);
                 }

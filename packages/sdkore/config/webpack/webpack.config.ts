@@ -3,7 +3,7 @@
 import webpack from 'webpack';
 import { options, packageJson } from './options';
 
-const deps = {};
+const deps: { [dependency: string]: string } = {};
 Object.keys(packageJson.dependencies).forEach(dep => {
     deps[dep] = dep;
 });
@@ -39,7 +39,7 @@ export default function webpackConfig(environment: string): webpack.Configuratio
         ],
     };
 
-    const tsRule = (target: 'src' | 'examples') => ({
+    const tsRule = (_target: 'src' | 'examples') => ({
         test: /\.tsx?$/,
         use: [
             {
@@ -93,7 +93,7 @@ export default function webpackConfig(environment: string): webpack.Configuratio
                 Buffer: false,
                 process: false,
             },
-            plugins: [...baseConfig.plugins, new (require('webpack-visualizer-plugin'))()],
+            plugins: [...baseConfig.plugins!, new (require('webpack-visualizer-plugin'))()],
         },
     ];
 }

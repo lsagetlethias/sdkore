@@ -6,10 +6,10 @@ import { HeadersList } from '../utils/client';
  * Will skip the first ancestor, Object.
  */
 function inheritedProperties(obj: object): { [k: string]: PropertyDescriptor } {
-    const desc: PropertyDescriptor[][] = [];
+    const desc: Array<{ [key: string]: PropertyDescriptor }> = [];
     let i = 0;
     while (obj) {
-        desc[i] = [];
+        desc[i] = {};
         Object.getOwnPropertyNames(obj).forEach(p => (desc[i][p] = Object.getOwnPropertyDescriptor(obj, p)));
         obj = Object.getPrototypeOf(obj);
         i++;
@@ -60,7 +60,7 @@ export const Headers = <M extends string>(headers: HeadersList, methods: M[] | M
     const properties = inheritedProperties(target.prototype);
     Object.keys(properties)
         .filter(key => !/(constructor)/.test(key) && typeof target.prototype[key] === 'function')
-        .filter((key: M) => !methods.includes(key))
+        .filter(key => !methods.includes(key as M))
         .forEach(key => {
             try {
                 Object.defineProperty(target.prototype, key, addHeaders(properties[key], headers));
@@ -77,8 +77,8 @@ export const Headers = <M extends string>(headers: HeadersList, methods: M[] | M
  * @annotation Method accessor
  */
 export const HeadersOnce = (headers: HeadersList) => <T extends AbstractAccessor>(
-    target: T,
-    propertyKey: keyof T,
+    _target: T,
+    _key: keyof T,
     descriptor: PropertyDescriptor,
 ): PropertyDescriptor => {
     return addHeaders(descriptor, headers);

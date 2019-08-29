@@ -9,8 +9,8 @@ import { AbstractAccessor } from '../DAO';
  * @annotation
  */
 export function NoCache<T>(
-    target: AbstractAccessor<T>,
-    key: string,
+    _target: AbstractAccessor<T>,
+    _key: string,
     descriptor: PropertyDescriptor,
 ): PropertyDescriptor {
     return {

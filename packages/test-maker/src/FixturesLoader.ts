@@ -39,7 +39,7 @@ export class FixturesLoader {
     }
 
     private async prepare() {
-        const rawFixtures = {};
+        const rawFixtures: { [name: string]: Fixtures } = {};
         const fixturePaths: string[] = (await readdir(this.fixturesFolder)).filter(
             p => !p.startsWith('_') && p.substr(-5) === '.json',
         );
@@ -55,12 +55,12 @@ export class FixturesLoader {
             }),
         );
         fixtureContents.forEach(f => {
-            const nsAddedFixtures = {};
+            const nsAddedFixtures: Fixtures = {};
             Object.entries(JSON.parse(f.content)).forEach(
                 ([name, fixture]) =>
                     (nsAddedFixtures[name] = {
                         '@namespace': f.namespace,
-                        ...fixture,
+                        ...(fixture as Fixture),
                     }),
             );
             rawFixtures[f.namespace] = nsAddedFixtures;
@@ -70,19 +70,19 @@ export class FixturesLoader {
     }
 
     private hydrate(rawFixtures: object) {
-        let fixtureFlattenMap = {};
+        let fixtureFlattenMap: Fixtures = {};
         Object.entries(rawFixtures).forEach(
-            ([namespace, fixture]) =>
+            ([_, fixture]) =>
                 (fixtureFlattenMap = {
                     ...fixtureFlattenMap,
                     ...fixture,
                 }),
         );
 
-        const doer = (f: object, root = false) => {
+        const doer = (f: Fixture | Fixtures, root = false): Fixtures => {
             const entries = Object.entries(f);
-            const ret = {};
-            const resolved = {};
+            const ret: { [key: string]: Fixtures } & Fixture = {} as any;
+            const resolved: { [key: string]: any } = {};
 
             entries.forEach(([key, value]) => {
                 if (Object(value) === value) {

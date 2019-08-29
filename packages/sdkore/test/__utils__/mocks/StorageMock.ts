@@ -35,18 +35,18 @@ export class SM extends Storage {
 
 /* Ensure property access feature from Storage */
 export const StorageMock = new Proxy(SM, {
-    construct(target: typeof SM, argsArray: any[]): SM {
+    construct(target: typeof SM): SM {
         return new Proxy(new target(), {
             enumerate(instance: SM): PropertyKey[] {
                 return Object.keys(instance.store);
             },
-            get(instance: SM, p: PropertyKey, receiver: any) {
+            get(instance: SM, p: PropertyKey) {
                 if (instance[p]) {
                     return instance[p];
                 }
                 return instance.getItem(p);
             },
-            set(instance: SM, p: PropertyKey, value: any, receiver: any): boolean {
+            set(instance: SM, p: PropertyKey, value: any): boolean {
                 instance.setItem(p, value);
                 return true;
             },

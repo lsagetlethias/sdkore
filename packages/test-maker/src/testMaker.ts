@@ -124,7 +124,7 @@ export class TestMaker {
     }
 
     public addMoreTest<TAccessor extends AnyAccessor>(test: AdditionalTest<TAccessor>): this {
-        this.additionalTestStack.push(test);
+        this.additionalTestStack.push(test as AdditionalTest<AnyAccessor>);
         return this;
     }
 
@@ -492,7 +492,6 @@ function _makeCombinedCrudTests<TCombinedAccessor extends AnyCombinedAccessor>(
             let parentFixtures: Fixture[];
             let nock: NockRoutes;
             let idName: string;
-            let idParentName: string;
 
             __doSetup(
                 testState,
@@ -513,7 +512,6 @@ function _makeCombinedCrudTests<TCombinedAccessor extends AnyCombinedAccessor>(
                 parentFixtures = testState.parentFixtures;
                 nock = testState.nock;
                 idName = testState.idName;
-                idParentName = testState.idParentName;
             });
 
             if (uncreatable) {
