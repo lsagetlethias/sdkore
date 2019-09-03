@@ -4,7 +4,7 @@ import { IClient } from '../utils/client';
 export type CriterionValue = string | number | boolean;
 
 export interface Criteria {
-    [Criterion: string]: CriterionValue | CriterionValue[];
+    [Criterion: string]: CriterionValue | CriterionValue[] | undefined;
 }
 
 /**

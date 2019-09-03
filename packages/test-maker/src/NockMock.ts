@@ -13,11 +13,15 @@ export interface EnsureConfig {
     headers?: { [h: string]: string };
 }
 
+interface ScopeWithInterceptors extends nock.Scope {
+    interceptors: nock.Interceptor[];
+}
+
 class NockMockClass {
-    private _scope: nock.Scope;
-    private get scope(): nock.Scope {
+    private _scope: ScopeWithInterceptors;
+    private get scope(): ScopeWithInterceptors {
         nock.disableNetConnect();
-        return this._scope || (this._scope = nock(MOCK_URL));
+        return this._scope || (this._scope = nock(MOCK_URL) as ScopeWithInterceptors);
     }
 
     public init<T extends NockRoutes>(
@@ -28,7 +32,7 @@ class NockMockClass {
     }
 
     public clean() {
-        (this.scope['interceptors'] as nock.Interceptor[]).forEach(i => {
+        this.scope['interceptors'].forEach(i => {
             nock.removeInterceptor(i);
         });
         nock.cleanAll();
@@ -129,7 +133,7 @@ export class NockRoutes {
 
     public initCreateRoutes(namespace: FixtureNamespace): this {
         const route = this.routes[namespace];
-        this.scope.post(route).reply((uri, requestBody) => [201, JSON.parse(requestBody)]);
+        this.scope.post(route).reply((_, requestBody) => [201, JSON.parse(requestBody)]);
 
         return this;
     }
@@ -141,7 +145,7 @@ export class NockRoutes {
         if (fixture[idName] !== void 0) {
             this.scope
                 .post(`${route}/${fixture[idName]}${routePlus}`)
-                .reply((uri, requestBody) => [201, JSON.parse(requestBody)]);
+                .reply((_, requestBody) => [201, JSON.parse(requestBody)]);
         }
 
         return this;
@@ -152,7 +156,7 @@ export class NockRoutes {
         const idName = fixture['@idName'];
         // this.doUploadRoute();
         if (fixture[idName] !== void 0) {
-            this.scope.put(`${route}/${fixture[idName]}`).reply((uri, requestBody) => {
+            this.scope.put(`${route}/${fixture[idName]}`).reply((_, requestBody) => {
                 return [
                     200,
                     {
@@ -174,7 +178,7 @@ export class NockRoutes {
         if (fixture[idName] !== void 0 && fixturePlus[idPlusName] !== void 0) {
             this.scope
                 .put(`${route}/${fixture[idName]}${routePlus}/${fixturePlus[idPlusName]}`)
-                .reply((uri, requestBody) => {
+                .reply((_, requestBody) => {
                     return [
                         200,
                         {

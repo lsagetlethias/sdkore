@@ -36,18 +36,18 @@ class LoggerClass {
      */
     public constructor(private readonly name: string = 'SDKore') {
         // weaver
-        Object.getOwnPropertyNames(Object.getPrototypeOf(this))
-            .filter(p => !['constructor', 'init', 'propagate'].includes(p))
-            .forEach(p => {
-                const original = this[p];
-                this[p] = (...args: any[]) => {
-                    this.init();
-                    original.call(this, ...args);
-                    const data = Array.from(args);
-                    data.shift();
-                    this.that.propagate(data);
-                };
-            });
+        (Object.getOwnPropertyNames(Object.getPrototypeOf(this)).filter(
+            p => !['constructor', 'init', 'propagate'].includes(p),
+        ) as Array<keyof Pick<this, 'log' | 'info' | 'warn' | 'error'>>).forEach(p => {
+            const original = this[p];
+            this[p] = (...args: any[]) => {
+                this.init();
+                original.call(this, ...(args as [any]));
+                const data = Array.from(args);
+                data.shift();
+                this.that.propagate(data);
+            };
+        });
     }
 
     private init() {
@@ -59,9 +59,10 @@ class LoggerClass {
         this.debug = GlobalStore.debug;
         if (!this.debug) {
             const copy = this.console;
-            this.console = {} as any;
+            const newConsole = {} as any;
+            this.console = newConsole;
             Object.keys(copy).forEach(p => {
-                this.console[p] = () => {
+                newConsole[p] = () => {
                     return;
                 };
             });

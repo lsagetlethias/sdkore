@@ -1,8 +1,5 @@
-import axios from 'axios';
-import nock from 'nock';
 import { TestMaker, TestState } from 'sdkore-test-maker';
-import { AbstractAccessor, Cancelable, IModel } from '../../src';
-import { MOCK_TOKEN, MOCK_URL } from '../__utils__/Const';
+import { AbstractAccessor, Cancelable } from '../../src';
 
 class TestAccessor extends AbstractAccessor {
     public constructor() {
@@ -16,7 +13,7 @@ class TestAccessor extends AbstractAccessor {
 }
 
 new TestMaker({})
-    .addMoreTest((namespace, state: TestState<any>) => {
+    .addMoreTest((_, state: TestState<any>) => {
         let accessor: TestAccessor;
 
         beforeAll(async () => {

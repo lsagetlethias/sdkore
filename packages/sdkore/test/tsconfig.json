@@ -2,6 +2,8 @@
   "extends": "../../../tsconfig.node.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "noImplicitAny": false,
+    "noStrictGenericChecks": true,
     "paths": {
       "sdkore-test-maker": ["../../test-maker/src/index.ts"]
     }

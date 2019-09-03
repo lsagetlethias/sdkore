@@ -20,7 +20,7 @@ export class NullCache<T = any> implements ICache<T>, ICacheSync<T> {
     /**
      * @inheritDoc
      */
-    public getSync<TReturn = T>(key: string, defaultValue: TReturn = null) {
+    public getSync<TReturn = T>(_key: string, defaultValue: TReturn = null) {
         return defaultValue;
     }
 
@@ -34,7 +34,7 @@ export class NullCache<T = any> implements ICache<T>, ICacheSync<T> {
     /**
      * @inheritDoc
      */
-    public setSync(key: string, value: T, ttl: number = null) {
+    public setSync(_key: string, _value: T, _ttl: number = null) {
         return false;
     }
 
@@ -48,7 +48,7 @@ export class NullCache<T = any> implements ICache<T>, ICacheSync<T> {
     /**
      * @inheritDoc
      */
-    public deleteSync(key: string) {
+    public deleteSync(_key: string) {
         return true;
     }
 
@@ -92,7 +92,7 @@ export class NullCache<T = any> implements ICache<T>, ICacheSync<T> {
     /**
      * @inheritDoc
      */
-    public setMultipleSync(values: CacheValues<T>, ttl?: number) {
+    public setMultipleSync(_values: CacheValues<T>, _ttl?: number) {
         return false;
     }
 
@@ -106,7 +106,7 @@ export class NullCache<T = any> implements ICache<T>, ICacheSync<T> {
     /**
      * @inheritDoc
      */
-    public deleteMultipleSync(keys: string[]) {
+    public deleteMultipleSync(_keys: string[]) {
         return true;
     }
 
@@ -120,7 +120,7 @@ export class NullCache<T = any> implements ICache<T>, ICacheSync<T> {
     /**
      * @inheritDoc
      */
-    public hasSync(key: string) {
+    public hasSync(_key: string) {
         return false;
     }
 }

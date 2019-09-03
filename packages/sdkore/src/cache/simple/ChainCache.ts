@@ -7,7 +7,7 @@ import { AbstractCache } from './AbstractCache';
  */
 export class ChainCache<T = any> extends AbstractCache<T> {
     private readonly miss: T;
-    private readonly caches: Array<ICache<T>>;
+    private readonly caches: Array<ICache<T> & { reset?(): void; prune?(): Promise<any> }>;
     private readonly cacheCount: number;
 
     /**
@@ -215,7 +215,7 @@ export class ChainCache<T = any> extends AbstractCache<T> {
 
         for (const cache of this.caches) {
             if (cache['prune']) {
-                pruned = (await cache['prune']()) && pruned;
+                pruned = !!(await cache['prune']()) && pruned;
             }
         }
 
