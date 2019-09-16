@@ -1,6 +1,6 @@
 {
   "name": "sdkore-test-maker",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Tooling to easily automate tests for SDKore's accessors.",
   "main": "dist/index.js",
   "types": "index.d.ts",
