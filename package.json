@@ -49,7 +49,7 @@
     "@types/webpack-bundle-analyzer": "^2.13.0",
     "@types/webpack-dev-server": "^3.1.1",
     "@wynd/tslint-config-wynd": "^1.5.0",
-    "@wynd/wynd-script": "^1.5.2",
+    "@wynd/wynd-script": "^1.5.5",
     "fake-indexeddb": "^2.0.4",
     "form-data": "^2.5.0",
     "git-message": "^2.0.2",
