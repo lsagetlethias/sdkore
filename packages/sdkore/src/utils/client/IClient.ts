@@ -74,6 +74,11 @@ export interface IClient {
     removeHeaders(headerKeys: Array<keyof HeadersList>): void;
 
     /**
+     * Get all headers actually set in client.
+     */
+    getHeaders(): HeadersList;
+
+    /**
      * Register the client as default client for accessor and save it in the pool.
      */
     register(): symbol;
