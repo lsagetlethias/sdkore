@@ -25,6 +25,8 @@ export abstract class AbstractClient implements IClient {
 
     protected static readonly POOL: Map<symbol, IClient> = new Map();
 
+    private readonly requestCacheIds: number[] = [];
+
     protected axios: AxiosInstance;
     protected readonly uid: symbol = Symbol();
     protected connected = false;
@@ -36,6 +38,8 @@ export abstract class AbstractClient implements IClient {
 
     protected readonly cachePolicy: ICachePolicy;
     protected readonly cachePrefix: string;
+
+    protected headers: HeadersList = {};
 
     protected canceler: Canceler;
 
@@ -99,6 +103,11 @@ export abstract class AbstractClient implements IClient {
             },
             ...(false === cachePolicy ? {} : { adapter: this.cachePolicy.getAxiosAdapter() }),
         });
+
+        this.axios.interceptors.request.use(config => {
+            config.headers = { ...(typeof config.headers === 'object' ? config.headers : {}), ...this.headers };
+            return config;
+        });
     }
 
     /**
@@ -113,6 +122,16 @@ export abstract class AbstractClient implements IClient {
      */
     public setRequestCache(cache = !this.axios.defaults.cache) {
         this.axios.defaults.cache = cache;
+        if (!cache) {
+            this.requestCacheIds.push(
+                this.axios.interceptors.request.use(config => {
+                    config.cache = false;
+                    return config;
+                }),
+            );
+        } else {
+            this.axios.interceptors.request.eject(this.requestCacheIds.shift());
+        }
     }
 
     /**
@@ -126,10 +145,7 @@ export abstract class AbstractClient implements IClient {
      * @inheritdoc
      */
     public addHeaders(headers: HeadersList) {
-        const headerKeys = Object.entries(headers);
-        for (const [key, value] of headerKeys) {
-            this.axios.defaults.headers.common[key] = value;
-        }
+        this.headers = { ...this.headers, ...headers };
     }
 
     /**
@@ -137,8 +153,15 @@ export abstract class AbstractClient implements IClient {
      */
     public removeHeaders(headerKeys: Array<keyof HeadersList>) {
         for (const key of headerKeys) {
-            delete this.axios.defaults.headers.common[key];
+            delete this.headers[key];
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public getHeaders() {
+        return { ...this.headers };
     }
 
     /**

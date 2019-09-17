@@ -136,6 +136,6 @@ describe('Client', () => {
 
         await client.get(`${MOCK_URL}/dummy`);
 
-        expect(axiosInstance.defaults.headers.common[REQUEST_HEADERS.AUTHORIZATION]).toBe(`Bearer ${token}`);
+        expect(client.getHeaders()[REQUEST_HEADERS.AUTHORIZATION]).toBe(`Bearer ${token}`);
     });
 });
