@@ -1,6 +1,6 @@
 {
   "name": "sdkore",
-  "version": "2.1.1",
+  "version": "2.2.1",
   "description": "Abstract tooling and easy to use Client for making SDK with any REST API.",
   "main": "dist/index.js",
   "types": "index.d.ts",
