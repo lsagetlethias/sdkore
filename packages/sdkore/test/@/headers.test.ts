@@ -26,7 +26,10 @@ const params: Array<[string, typeof AbstractAccessor]> = [
     ['@HeadersOnce', HeadersOnceAccessor],
     [
         'HeadersInline',
-        Headers(headers, 'delete')(
+        Headers(
+            headers,
+            'delete',
+        )(
             class extends AbstractAccessor<IModel> {
                 constructor() {
                     super('/test');
@@ -58,7 +61,7 @@ params.forEach(([name, accessorClass]) => {
             global.__pleaseHelp = true;
             expect.assertions(1);
             const scope = nock(MOCK_URL, { badheaders: Object.keys(headers) });
-            scope.delete('/test/0').reply(200, true);
+            scope.delete('/test/0').reply(200, true as any);
 
             await expect(accessor.delete({ id: 0 })).resolves.not.toThrow();
             scope.done();

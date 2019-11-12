@@ -32,10 +32,10 @@
     "registry": "https://registry.npmjs.org/"
   },
   "dependencies": {
-    "@bios21/tstrait": "^1.0.0",
+    "@bios21/tstrait": "^1.1.0",
     "axios": "^0.19.0",
-    "idb-keyval": "^3.1.0",
-    "query-string": "^6.0.0"
+    "idb-keyval": "^3.2.0",
+    "query-string": "^6.8.3"
   },
   "files": [
     "UPGRADE*",

@@ -133,7 +133,7 @@ export class NockRoutes {
 
     public initCreateRoutes(namespace: FixtureNamespace): this {
         const route = this.routes[namespace];
-        this.scope.post(route).reply((_, requestBody) => [201, JSON.parse(requestBody)]);
+        this.scope.post(route).reply((_, requestBody) => [201, JSON.parse(requestBody as string)]);
 
         return this;
     }
@@ -145,7 +145,7 @@ export class NockRoutes {
         if (fixture[idName] !== void 0) {
             this.scope
                 .post(`${route}/${fixture[idName]}${routePlus}`)
-                .reply((_, requestBody) => [201, JSON.parse(requestBody)]);
+                .reply((_, requestBody) => [201, JSON.parse(requestBody as string)]);
         }
 
         return this;
@@ -161,7 +161,7 @@ export class NockRoutes {
                     200,
                     {
                         ...fixture,
-                        ...JSON.parse(requestBody),
+                        ...JSON.parse(requestBody as string),
                     },
                 ];
             });
@@ -183,7 +183,7 @@ export class NockRoutes {
                         200,
                         {
                             ...fixturePlus,
-                            ...JSON.parse(requestBody),
+                            ...JSON.parse(requestBody as string),
                         },
                     ];
                 });
