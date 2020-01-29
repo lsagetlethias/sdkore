@@ -22,6 +22,6 @@
     "pub": "wsc pub"
   },
   "dependencies": {
-    "sdkore": "^2.0.0"
+    "sdkore": "^2.2.1"
   }
 }
